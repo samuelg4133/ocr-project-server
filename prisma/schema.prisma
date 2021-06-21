@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model employees {
+  id               String    @id @db.VarChar(36)
+  firstname        String    @db.VarChar(60)
+  surname          String    @db.VarChar(200)
+  cpf              String    @unique @db.VarChar(11)
+  date_of_birthday DateTime  @db.Date
+  enabled          Boolean   @default(true)
+  created_at       DateTime? @default(now()) @db.Timestamp(0)
+  updated_at       DateTime? @default(now())
+  users            users[]
+}
+
+model users {
+  id          String     @id @db.VarChar(36)
+  username    String     @unique @db.VarChar(60)
+  email       String     @unique @db.VarChar(60)
+  enabled     Boolean    @default(true)
+  created_at  DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at  DateTime?  @default(now())
+  employee_id String?    @db.VarChar(36)
+  password    String?    @db.VarChar(200)
+  employees   employees? @relation(fields: [employee_id], references: [id])
+
+  @@index([employee_id], name: "FK_Employee")
+}
