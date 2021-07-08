@@ -22,7 +22,7 @@ export class EmployeesController {
     return response.json(employee);
   }
 
-  public async index(request: Request, response: Response): Promise<Response> {
+  public async index(_: Request, response: Response): Promise<Response> {
     const listEmployees = container.resolve(ListEmployeesService);
 
     const employees = await listEmployees.execute();

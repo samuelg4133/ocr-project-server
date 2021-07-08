@@ -1,5 +1,5 @@
-import { employees } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
+import IListEmployeesDTO from "../dtos/IListEmployeesDTO";
 
 import IEmployeesRepository from "../interfaces/IEmployeesRepository";
 
@@ -10,7 +10,7 @@ export default class ListEmployeesService {
     private employeesRepository: IEmployeesRepository
   ) {}
 
-  public async execute(): Promise<employees[]> {
+  public async execute(): Promise<IListEmployeesDTO[]> {
     return await this.employeesRepository.findAll();
   }
 }
